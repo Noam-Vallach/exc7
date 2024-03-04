@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Image Browser</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    body,
+    html {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .img-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8bf89;
+      margin: auto;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 800px;
+      max-height: 700px;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .smallImg-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding: 8px;
+      margin-bottom: 20px;
+      background-color: whitesmoke;
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+     
+    }
+
+    .smallImg {
+      margin: 0 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+ 
+  </style>
+  <script>
+    angular
+      .module("imageBrowserApp", [])
+      .controller("ImageController", function ($scope) {
+        $scope.images = [];
+        for (let i = 1; i <= 8; i++) {
+          $scope.images.push({
+            id: i,
+            imgUrl: `https://picsum.photos/id/${i}/350/350`,
+            smallImgUrl: `https://picsum.photos/id/${i}/50/50`,
+          });
+        }
+
+        $scope.selectedImgIndex = 0;
+
+        $scope.selectImg = function (index) {
+          $scope.selectedImgIndex = index;
+        };
+      });
+  </script>
+</head>
+
+<body ng-app="imageBrowserApp" ng-controller="ImageController">
+  <div class="img-container">
+    <div class="smallImg-container">
+      <img ng-repeat="image in images" ng-src="{{image.smallImgUrl}}" alt="SmallImg" ng-click="selectImg($index)"
+        class="smallImg" />
+    </div>
+    <div class="start-Img-container">
+      <img ng-src="{{images[selectedImgIndex].imgUrl}}" alt="Selected" class="start-img" />
+    </div>
+  </div>
+</body>
+
+</html>
